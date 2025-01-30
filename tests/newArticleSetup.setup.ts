@@ -1,11 +1,11 @@
 import { test as setup, expect } from '@playwright/test';
 
 setup('create new article', async ({ request }) => {
-  const articleResponse = await request.post('https://api.realworld.io/api/articles/', {
+  const articleResponse = await request.post('https://conduit-api.bondaracademy.com/api/articles/', {
     data: {
       "article": {
         "tagList": [],
-        "title": "Likes test article",
+        "title": "Likes test article-check",
         "description": "This is a test description",
         "body": "This is a test body"
       }

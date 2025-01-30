@@ -27,27 +27,29 @@ export default defineConfig({
     }
    
   },
-
-  /* Configure projects for major browsers */
-  /* Configure projects for major browsers */
 projects: [
   {
     name: 'setup',
     testMatch: 'auth.setup.ts',
   },
   {
-    name: 'articleSetup',
-    testMatch: 'newArticleSetup.spec.ts',
-    dependencies: ['setup'],
+    name: 'articleSetup', // проект який відповідальний за запуск теста по написанню статті
+    testMatch: 'newArticleSetup.setup.ts',
+    dependencies: ['setup'], //залежний на auth.setup.ts так як первинно має бути логін і беарер токен
+    teardown: 'articleCleanUp'
   },
+  {
+    name: 'articleCleanUp', 
+    testMatch: 'articleCleanUp.setup.ts'
+  }, 
   {
     name: 'regression',
-    use: { ...devices['Desktop Chrome'], storageState: '.auth/user.json' },
+    use: { ...devices['Desktop Chrome'], storageState: '.auth/user.json' }, //тест по зберіганню айдішки статті, для подальшого видалення
     dependencies: ['setup'],
   },
   {
-    name: 'likeCounter',
-    testMatch: 'likesCounter.spec.ts',
+    name: 'likeCounter', //завязаний на articleSetup так як має лайкнути статтю, створену цим тестом
+    testMatch: 'likeCounter.setup.ts',
     use: { ...devices['Desktop Chrome'], storageState: '.auth/user.json' },
     dependencies: ['articleSetup'],
   },
